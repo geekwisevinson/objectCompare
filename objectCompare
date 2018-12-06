@@ -1,0 +1,53 @@
+function objectCompare(objA, objB){
+
+ let props = Object.keys(objA);
+
+ for (let i = 0; i < props.length; i++){
+   if(objB[props[i]] === undefined) {
+     console.log('objB[props[i]] is undefined');
+     return false;
+   }
+
+   if (objA[props[i]] !== objB[props[i]]){
+     console.log('objA[' + props[i] + '] and objB[' + props[i] + '] are not equal');
+     return false;
+   }
+
+ }
+ props = Object.keys(objB);
+ console.log(props);
+
+ for (let i = 0; i < props.length; i++){
+
+   if(objA[props[i]] === undefined) {
+     console.log('objA[props[i]] is undefined');
+     return false;
+   }
+
+   if (objA[props[i]] !== objB[props[i]]){
+     console.log('objA[' + props[i] + '] and objB[' + props[i] + '] are not equal');
+     return false;
+   }
+
+   if(typeof objB[props[i]]=== 'object'){
+     if (!objectCompare(objA[props[i]], objB[props[i]]) ) return false;
+   }
+
+ }
+
+ return true;
+}
+
+let oa = {a:25,b:36};
+let ob = {a:25,b:36};
+let oc = {a:25,b:37};
+
+console.log('objs should be true ',objectCompare(oa,ob));
+console.log('objs should be false ',objectCompare(oa,oc));
+
+let aa = [0,1,5];
+let ab = [0,1,5];
+let ac = [0,1,6];
+console.log('arrays should be true ',objectCompare(aa,ab));
+
+console.log('arrays should be false ',objectCompare(aa,ac));
